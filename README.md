@@ -8,6 +8,8 @@ Configured an Okta Workforce Identity tenant to simulate enterprise Identity Pro
 - **Tenant:** trial-2361751-admin.okta.com
 - **Role:** Okta Administrator
 - **Users configured:** 4 (3 test users + admin)
+<img width="1882" height="864" alt="image" src="https://github.com/user-attachments/assets/d3c91d61-6a85-4899-91e5-ff3514bc8a75" />
+
 
 ## What I Built
 
@@ -25,8 +27,12 @@ Configured an Okta Workforce Identity tenant to simulate enterprise Identity Pro
   protocol used by enterprises
 - Configured Okta as Identity Provider (IdP) and Salesforce as Service Provider (SP)
 - Generated SAML Metadata URL containing IdP configuration details
+<img width="734" height="775" alt="image" src="https://github.com/user-attachments/assets/a19610da-495a-4e38-88ce-9692233baa4f" />
+
 - Assigned users individually to the Salesforce application demonstrating
   least privilege access control
+  <img width="856" height="605" alt="image" src="https://github.com/user-attachments/assets/257879bd-8b6e-46ce-9538-6c0c296e836d" />
+
 - Configuration mirrors real enterprise deployment — identical to what would
   be done in a production environment
 
@@ -38,6 +44,8 @@ Configured an Okta Workforce Identity tenant to simulate enterprise Identity Pro
 - Password remains Required
 - Enforces zero trust principles — no user trusted based on password alone
   regardless of location or network
+  <img width="834" height="695" alt="image" src="https://github.com/user-attachments/assets/a873460f-96f8-4114-a5f7-798e0e51bbeb" />
+
 
 ## SAML 2.0 Architecture
 | Component | Role |

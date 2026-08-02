@@ -54,8 +54,8 @@ Configured an Okta Workforce Identity tenant to simulate enterprise Identity Pro
 - Built a custom Sign-On Policy applied across all 3 integrated applications
 - Configured MFA enforcement (any 2 factor types) and a 4-hour re-authentication requirement, tightening session trust beyond default SSO behavior
 - Demonstrates policy design distinct from Microsoft's Conditional Access, using Okta's native authentication policy framework
-<img width="1063" height="699" alt="image" src="https://github.com/user-attachments/assets/00edd905-1e2c-4a44-b649-81a7519841e5" /> <img width="400" height="425" alt="image" src="https://github.com/user-attachments/assets/707da041-4796-43b8-8c5f-a6529a822742" /> <img width="536" height="563" alt="image" src="https://github.com/user-attachments/assets/c88cdbef-3b50-4331-9029-6db71b4b100a" />
-
+<img width="1063" height="699" alt="image" src="https://github.com/user-attachments/assets/00edd905-1e2c-4a44-b649-81a7519841e5" /> <img width="400" height="425" alt="image" src="https://github.com/user-attachments/assets/707da041-4796-43b8-8c5f-a6529a822742" /> 
+<img width="1383" height="517" alt="image" src="https://github.com/user-attachments/assets/c1a957fd-fc33-4af2-89e0-a4967152ea03" />
 
 
 ### Troubleshooting Scenarios

@@ -72,6 +72,8 @@ Documented 5 real, reproduced authentication failures with root-cause analysis a
  <img width="585" height="536" alt="image" src="https://github.com/user-attachments/assets/2750c473-ba16-4f06-b19e-e31844f92f63" />
  
 4. **SAML trust misconfiguration** — Initial SAML sign-in attempts failed with a Salesforce "Single Sign-On Error" because only the Okta (IdP) side was configured. Root cause: SAML 2.0 requires trust configured on both the IdP and SP. Resolved by importing Okta's SAML metadata into Salesforce's Single Sign-On Settings, establishing a working, verified trust relationship.
+<img width="1151" height="618" alt="image" src="https://github.com/user-attachments/assets/1a2600f7-54e2-437f-9936-94f08620c0a7" />
+
 5. **OIDC redirect URI mismatch** — Intentionally misconfigured the OIDC app's registered redirect URI, reproducing a real `invalid_request` / `redirect_uri mismatch` error (HTTP 400) during the OAuth authorization flow. Resolved by correcting the registered URI to match the client application's expected callback.
 <img width="1221" height="880" alt="image" src="https://github.com/user-attachments/assets/4881ff94-9362-4a7e-a97a-641c44600347" />
 

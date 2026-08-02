@@ -63,6 +63,8 @@ Configured an Okta Workforce Identity tenant to simulate enterprise Identity Pro
 Documented 5 real, reproduced authentication failures with root-cause analysis and resolution steps:
 
 1. **Provisioning failure (Password Expired status)** — A user created without a password landed in "Password Expired" status. Resolved by deactivating and recreating the account.
+<img width="760" height="291" alt="image" src="https://github.com/user-attachments/assets/58fcc253-6b2a-4175-baa2-8ee597826e6b" />
+
 2. **Missing application access after removal** — Removing an individually-assigned application fully revokes access, even if the user remains in other groups tied to that app. Root cause: app assignments are per-user unless explicitly pushed via group assignment. Resolved by reassigning the app directly.
 <img width="760" height="389" alt="image" src="https://github.com/user-attachments/assets/c7e5445c-be5f-4035-ab2e-09652930f844" />
 

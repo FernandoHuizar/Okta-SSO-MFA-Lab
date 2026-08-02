@@ -11,6 +11,7 @@ Configured an Okta Workforce Identity tenant to simulate enterprise Identity Pro
 - **Role:** Okta Administrator
 - **Users configured:** 5 (4 test users + admin)
 - **Secondary environment:** Salesforce Developer Edition org (used to validate real SAML trust configuration)
+<img width="1321" height="564" alt="image" src="https://github.com/user-attachments/assets/1051fd9b-c7f5-47f9-b7d1-93f899886d16" />
 
 ## What I Built
 
@@ -18,6 +19,7 @@ Configured an Okta Workforce Identity tenant to simulate enterprise Identity Pro
 
 - Created 4 test users, each assigned to a department group (RealMadrid, ManCity, Bayern, PSG)
 - Demonstrated least-privilege access through individual and group-based application assignments
+<img width="780" height="546" alt="image" src="https://github.com/user-attachments/assets/64f4c56b-df67-40ce-801f-eece56592ab9" />
 
 ### Multi-Protocol SSO Integration
 
@@ -25,14 +27,20 @@ Configured an Okta Workforce Identity tenant to simulate enterprise Identity Pro
 - Located Salesforce integration in Okta's App Integration Catalog
 - Configured Okta as Identity Provider (IdP) with Salesforce as Service Provider (SP)
 - Completed a full, live SAML trust relationship: signed up for a real Salesforce Developer org, imported Okta's IdP metadata into Salesforce's Single Sign-On Settings, and validated the end-to-end SSO handshake
+<img width="790" height="560" alt="image" src="https://github.com/user-attachments/assets/3a6e768a-7307-4c28-bf12-7c9adb10d4dc" />
+<img width="813" height="772" alt="image" src="https://github.com/user-attachments/assets/cdcc9be1-0264-44a0-a077-0bf15c058a77" />
 
 **Zendesk (SAML 2.0)**
 - Second SAML integration to demonstrate repeatable, multi-app SSO configuration
+<img width="771" height="525" alt="image" src="https://github.com/user-attachments/assets/e122ec7b-c98f-4f1e-afea-1eed89bcc79b" />
 
 **InternalTools (OIDC / OAuth 2.0)**
 - Built a custom OIDC Web Application integration using the Authorization Code grant type
 - Configured redirect URIs, client credentials, and group-based access assignment
 - Demonstrates protocol range beyond SAML, covering the modern OAuth 2.0/OIDC standard used by most cloud-native applications
+<img width="710" height="378" alt="image" src="https://github.com/user-attachments/assets/18bbbb5b-ee7a-4504-a562-8d479a4510ea" /> <img width="544" height="438" alt="image" src="https://github.com/user-attachments/assets/c69c19c4-bc0f-4c3b-8add-ee098b2ae52c" /> <img width="552" height="252" alt="image" src="https://github.com/user-attachments/assets/519c0e5a-66db-47ea-b98b-2827f2d77ddf" />
+
+
 
 ### MFA Policy Configuration
 

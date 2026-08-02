@@ -65,8 +65,10 @@ Documented 5 real, reproduced authentication failures with root-cause analysis a
 1. **Provisioning failure (Password Expired status)** — A user created without a password landed in "Password Expired" status. Resolved by deactivating and recreating the account.
 2. **Missing application access after removal** — Removing an individually-assigned application fully revokes access, even if the user remains in other groups tied to that app. Root cause: app assignments are per-user unless explicitly pushed via group assignment. Resolved by reassigning the app directly.
 <img width="760" height="389" alt="image" src="https://github.com/user-attachments/assets/c7e5445c-be5f-4035-ab2e-09652930f844" />
+
 3. **MFA lockout** — Simulated a user losing access to their enrolled authenticator. Resolved using Okta's Reset Authenticators admin action, allowing the user to re-enroll.
  <img width="585" height="536" alt="image" src="https://github.com/user-attachments/assets/2750c473-ba16-4f06-b19e-e31844f92f63" />
+ 
 4. **SAML trust misconfiguration** — Initial SAML sign-in attempts failed with a Salesforce "Single Sign-On Error" because only the Okta (IdP) side was configured. Root cause: SAML 2.0 requires trust configured on both the IdP and SP. Resolved by importing Okta's SAML metadata into Salesforce's Single Sign-On Settings, establishing a working, verified trust relationship.
 5. **OIDC redirect URI mismatch** — Intentionally misconfigured the OIDC app's registered redirect URI, reproducing a real `invalid_request` / `redirect_uri mismatch` error (HTTP 400) during the OAuth authorization flow. Resolved by correcting the registered URI to match the client application's expected callback.
 <img width="1221" height="880" alt="image" src="https://github.com/user-attachments/assets/4881ff94-9362-4a7e-a97a-641c44600347" />

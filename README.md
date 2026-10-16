@@ -1,113 +1,75 @@
-# Okta Identity Management Lab
+# Okta SSO and MFA Lab
 
-## Overview
+**The problem:** people juggle a separate password for every app, and a stolen password is often all an attacker needs.
 
-Configured an Okta Workforce Identity tenant to simulate enterprise Identity Provider (IdP) operations, including multi-protocol SSO integration (SAML 2.0 and OIDC), organization-wide MFA enforcement, custom Sign-On Policies, and real-world authentication troubleshooting. This lab mirrors the exact Okta workflows used in production enterprise environments, including a live SAML trust relationship configured end-to-end against a real Salesforce Developer org.
+**What I did:** set up Okta so users sign in once to reach 3 apps (single sign-on), required a second proof of identity (MFA), and reproduced 5 common sign-in problems a help desk or IAM analyst gets asked to fix.
 
-## Environment
+*Screenshot lab from earlier in my learning. My main project is [Havlund Pharma](https://github.com/FernandoHuizar/havlund-identity-lifecycle).*
 
-- **Platform:** Okta Integrator Free Plan
-- **Tenant:** integrator-5316119-admin.okta.com
-- **Role:** Okta Administrator
-- **Users configured:** 5 (4 test users + admin)
-- **Secondary environment:** Salesforce Developer Edition org (used to validate real SAML trust configuration)
-<img width="1321" height="564" alt="image" src="https://github.com/user-attachments/assets/1051fd9b-c7f5-47f9-b7d1-93f899886d16" />
+## IAM ideas this lab shows
 
-## What I Built
+| Idea | What it means | Where it shows up here |
+|---|---|---|
+| Single sign-on (SSO) | Sign in once, get into every app you're allowed to use | Salesforce, Zendesk and an internal app all trust Okta |
+| Identity provider and app | The identity provider (Okta) checks who you are. The app trusts its answer | Set up on both sides for Salesforce |
+| MFA | A second proof besides the password, like a phone prompt | Okta Verify required for everyone |
+| Group-based access | Give access to a group, not one person at a time | Users put in department groups, apps assigned to groups |
+| Sign-on policy | Rules for when and how often people must prove who they are | MFA plus sign in again every 4 hours for the 3 apps |
+| Troubleshooting | Finding why someone can't get in, then fixing the cause | 5 problems reproduced and fixed below |
 
-### User & Group Management
+## What I did
 
-- Created 4 test users, each assigned to a department group (RealMadrid, ManCity, Bayern, PSG)
-- Demonstrated least-privilege access through individual and group-based application assignments
-<img width="780" height="546" alt="image" src="https://github.com/user-attachments/assets/64f4c56b-df67-40ce-801f-eece56592ab9" />
+**Users and groups.** Created 4 test users and put each in a department group (named after football clubs). Gave app access through groups and, in a few cases, to single users, to see the difference.
 
-### Multi-Protocol SSO Integration
+<img width="1321" height="564" alt="Okta users" src="https://github.com/user-attachments/assets/1051fd9b-c7f5-47f9-b7d1-93f899886d16" />
+<img width="780" height="546" alt="Okta groups" src="https://github.com/user-attachments/assets/64f4c56b-df67-40ce-801f-eece56592ab9" />
 
-**Salesforce (SAML 2.0)**
-- Located Salesforce integration in Okta's App Integration Catalog
-- Configured Okta as Identity Provider (IdP) with Salesforce as Service Provider (SP)
-- Completed a full, live SAML trust relationship: signed up for a real Salesforce Developer org, imported Okta's IdP metadata into Salesforce's Single Sign-On Settings, and validated the end-to-end SSO handshake
-<img width="790" height="560" alt="image" src="https://github.com/user-attachments/assets/3a6e768a-7307-4c28-bf12-7c9adb10d4dc" />
-<img width="813" height="772" alt="image" src="https://github.com/user-attachments/assets/cdcc9be1-0264-44a0-a077-0bf15c058a77" />
+**Single sign-on for 3 apps.**
+- **Salesforce (SAML):** set up Okta as the identity provider, then set up a real free Salesforce org to trust Okta. Signing in worked end to end.
+- **Zendesk (SAML):** a second app the same way, to show it's repeatable.
+- **InternalTools (OIDC):** a custom app using OIDC, the newer standard most cloud apps use.
 
-**Zendesk (SAML 2.0)**
-- Second SAML integration to demonstrate repeatable, multi-app SSO configuration
-<img width="771" height="525" alt="image" src="https://github.com/user-attachments/assets/e122ec7b-c98f-4f1e-afea-1eed89bcc79b" />
+<img width="790" height="560" alt="Salesforce app in Okta" src="https://github.com/user-attachments/assets/3a6e768a-7307-4c28-bf12-7c9adb10d4dc" />
+<img width="813" height="772" alt="Salesforce single sign-on settings" src="https://github.com/user-attachments/assets/cdcc9be1-0264-44a0-a077-0bf15c058a77" />
+<img width="771" height="525" alt="Zendesk app in Okta" src="https://github.com/user-attachments/assets/e122ec7b-c98f-4f1e-afea-1eed89bcc79b" />
+<img width="710" height="378" alt="OIDC app" src="https://github.com/user-attachments/assets/18bbbb5b-ee7a-4504-a562-8d479a4510ea" /> <img width="544" height="438" alt="OIDC app settings" src="https://github.com/user-attachments/assets/c69c19c4-bc0f-4c3b-8add-ee098b2ae52c" /> <img width="552" height="252" alt="OIDC app assignment" src="https://github.com/user-attachments/assets/519c0e5a-66db-47ea-b98b-2827f2d77ddf" />
 
-**InternalTools (OIDC / OAuth 2.0)**
-- Built a custom OIDC Web Application integration using the Authorization Code grant type
-- Configured redirect URIs, client credentials, and group-based access assignment
-- Demonstrates protocol range beyond SAML, covering the modern OAuth 2.0/OIDC standard used by most cloud-native applications
-<img width="710" height="378" alt="image" src="https://github.com/user-attachments/assets/18bbbb5b-ee7a-4504-a562-8d479a4510ea" /> <img width="544" height="438" alt="image" src="https://github.com/user-attachments/assets/c69c19c4-bc0f-4c3b-8add-ee098b2ae52c" /> <img width="552" height="252" alt="image" src="https://github.com/user-attachments/assets/519c0e5a-66db-47ea-b98b-2827f2d77ddf" />
+**MFA for everyone.** Made Okta Verify required in the default policy, so a password alone isn't enough.
 
+<img width="769" height="342" alt="Okta Verify required" src="https://github.com/user-attachments/assets/ba4e5285-2861-41ae-92f8-24fdc929434b" />
 
+**Sign-on policy.** One policy for all 3 apps: MFA required, and users sign in again after 4 hours.
 
-### MFA Policy Configuration
+<img width="1063" height="699" alt="Sign-on policy" src="https://github.com/user-attachments/assets/00edd905-1e2c-4a44-b649-81a7519841e5" /> <img width="400" height="425" alt="Sign-on rule" src="https://github.com/user-attachments/assets/707da041-4796-43b8-8c5f-a6529a822742" />
+<img width="1383" height="517" alt="Policy applied to apps" src="https://github.com/user-attachments/assets/c1a957fd-fc33-4af2-89e0-a4967152ea03" />
 
-- Navigated to Security → Authenticators
-- Set Okta Verify to Required under the org-wide Default Policy
-- Enforces zero trust principles: no user is trusted based on password alone
-<img width="769" height="342" alt="image" src="https://github.com/user-attachments/assets/ba4e5285-2861-41ae-92f8-24fdc929434b" />
+## 5 sign-in problems I reproduced and fixed
 
-### Sign-On Policies
+1. **New user stuck in "Password Expired."** The account was made without a password. Fix: turned it off and created it again properly.
+<img width="760" height="291" alt="Password expired status" src="https://github.com/user-attachments/assets/58fcc253-6b2a-4175-baa2-8ee597826e6b" />
 
-- Built a custom Sign-On Policy applied across all 3 integrated applications
-- Configured MFA enforcement (any 2 factor types) and a 4-hour re-authentication requirement, tightening session trust beyond default SSO behavior
-- Demonstrates policy design distinct from Microsoft's Conditional Access, using Okta's native authentication policy framework
-<img width="1063" height="699" alt="image" src="https://github.com/user-attachments/assets/00edd905-1e2c-4a44-b649-81a7519841e5" /> <img width="400" height="425" alt="image" src="https://github.com/user-attachments/assets/707da041-4796-43b8-8c5f-a6529a822742" /> 
-<img width="1383" height="517" alt="image" src="https://github.com/user-attachments/assets/c1a957fd-fc33-4af2-89e0-a4967152ea03" />
+2. **User lost an app after one assignment was removed.** The app was given to that person directly, not through their group, so removing it took it away completely. Fix: assigned it again. Lesson: giving access by group is easier to manage.
+<img width="760" height="389" alt="Missing app access" src="https://github.com/user-attachments/assets/c7e5445c-be5f-4035-ab2e-09652930f844" />
 
+3. **User lost their MFA phone.** Fix: used Reset Authenticators so they could set up MFA again.
+<img width="585" height="536" alt="Reset authenticators" src="https://github.com/user-attachments/assets/2750c473-ba16-4f06-b19e-e31844f92f63" />
 
-### Troubleshooting Scenarios
+4. **Salesforce single sign-on error.** Only the Okta side was set up. SAML needs both sides to trust each other. Fix: loaded Okta's details into Salesforce.
+<img width="1151" height="618" alt="Salesforce SSO error" src="https://github.com/user-attachments/assets/1a2600f7-54e2-437f-9936-94f08620c0a7" />
 
-Documented 5 real, reproduced authentication failures with root-cause analysis and resolution steps:
+5. **"redirect_uri mismatch" error.** I broke the OIDC app's return address on purpose. The address must match exactly. Fix: corrected it.
+<img width="1221" height="880" alt="Redirect URI error" src="https://github.com/user-attachments/assets/4881ff94-9362-4a7e-a97a-641c44600347" />
 
-1. **Provisioning failure (Password Expired status)** — A user created without a password landed in "Password Expired" status. Resolved by deactivating and recreating the account.
-<img width="760" height="291" alt="image" src="https://github.com/user-attachments/assets/58fcc253-6b2a-4175-baa2-8ee597826e6b" />
+## Terms in plain words
 
-2. **Missing application access after removal** — Removing an individually-assigned application fully revokes access, even if the user remains in other groups tied to that app. Root cause: app assignments are per-user unless explicitly pushed via group assignment. Resolved by reassigning the app directly.
-<img width="760" height="389" alt="image" src="https://github.com/user-attachments/assets/c7e5445c-be5f-4035-ab2e-09652930f844" />
+| Term | Meaning |
+|---|---|
+| Identity provider (IdP) | The system that checks who you are. Here, Okta |
+| Service provider (SP) | The app that trusts the identity provider. Here, Salesforce or Zendesk |
+| SAML | An older, common way for an app to trust Okta's sign-in |
+| OIDC | A newer way to do the same thing, used by most modern apps |
+| Redirect URI | Where the user is sent back after signing in. Must match exactly |
 
-3. **MFA lockout** — Simulated a user losing access to their enrolled authenticator. Resolved using Okta's Reset Authenticators admin action, allowing the user to re-enroll.
- <img width="585" height="536" alt="image" src="https://github.com/user-attachments/assets/2750c473-ba16-4f06-b19e-e31844f92f63" />
- 
-4. **SAML trust misconfiguration** — Initial SAML sign-in attempts failed with a Salesforce "Single Sign-On Error" because only the Okta (IdP) side was configured. Root cause: SAML 2.0 requires trust configured on both the IdP and SP. Resolved by importing Okta's SAML metadata into Salesforce's Single Sign-On Settings, establishing a working, verified trust relationship.
-<img width="1151" height="618" alt="image" src="https://github.com/user-attachments/assets/1a2600f7-54e2-437f-9936-94f08620c0a7" />
+## Built with
 
-5. **OIDC redirect URI mismatch** — Intentionally misconfigured the OIDC app's registered redirect URI, reproducing a real `invalid_request` / `redirect_uri mismatch` error (HTTP 400) during the OAuth authorization flow. Resolved by correcting the registered URI to match the client application's expected callback.
-<img width="1221" height="880" alt="image" src="https://github.com/user-attachments/assets/4881ff94-9362-4a7e-a97a-641c44600347" />
-
-
-## SAML 2.0 Architecture
-
-| Component | Role |
-|-----------|------|
-| Okta | Identity Provider (IdP) — authenticates users |
-| Salesforce / Zendesk | Service Provider (SP) — trusts Okta for authentication |
-| SAML Assertion | Signed XML token Okta sends to the SP after authentication |
-| Metadata URL | Contains IdP configuration imported by the SP to establish trust |
-
-## OIDC Architecture
-
-| Component | Role |
-|-----------|------|
-| Okta | Authorization Server — issues tokens |
-| InternalTools | Client Application — requests authentication via Authorization Code grant |
-| Redirect URI | Registered callback endpoint; must match exactly or the request is rejected |
-| Access/ID Token | Issued after successful authentication and consent |
-
-## Key Concepts Demonstrated
-
-- SAML 2.0 federation protocol (Identity Provider vs Service Provider architecture)
-- OAuth 2.0 / OIDC Authorization Code flow
-- Multi-protocol SSO integration across 3 applications
-- Multi-Factor Authentication enforcement
-- Custom Sign-On Policies and session re-authentication controls
-- Zero Trust security model
-- Least privilege and group-based access control
-- Real-world authentication troubleshooting and root-cause documentation
-- Cross-platform SSO validation (Okta + a real Salesforce org)
-
-## Technologies Used
-
-`Okta` `SAML 2.0` `OAuth 2.0` `OIDC` `Single Sign-On (SSO)` `Multi-Factor Authentication` `Sign-On Policies` `Identity and Access Management` `Zero Trust` `Salesforce`
+Okta (Integrator Free Plan), SAML 2.0, OIDC, Okta Verify, Salesforce Developer Edition, Zendesk.
